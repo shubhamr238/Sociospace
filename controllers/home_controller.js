@@ -1,3 +1,5 @@
 module.exports.home=(req, res)=>{
-    return res.end("<h1>Sociospace up and running!</h1>")
-}
+    return res.render('home', {
+        title: "Sociospace | Home"
+    });
+};
