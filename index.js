@@ -9,7 +9,7 @@ const expressLayouts= require("express-ejs-layouts");
 
 app.use(express.static('./assets'));
 app.use(expressLayouts);
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 //extract style and script from sub pages
 //into the layout
