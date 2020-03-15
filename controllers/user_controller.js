@@ -7,12 +7,18 @@ module.exports.profile=(req, res)=>{
 const User=require('../models/user');
 
 module.exports.signUp=(req, res)=>{
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_up', {
         title: "Sociospace | Sign Up"
     });
 };
 
 module.exports.signIn=(req, res)=>{
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_in', {
         title: "Sociospace | Sign In"
     });
@@ -47,5 +53,12 @@ module.exports.create=(req, res)=>{
 
 //sign in and create a session for user
 module.exports.createSession=(req, res)=>{
-    //Todo Later
+    
+    return res.redirect('/users/profile');
+
 };
+
+module.exports.destroySession=function(req, res){
+    req.logout();
+    return res.redirect('/');
+}
