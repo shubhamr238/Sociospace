@@ -8,7 +8,15 @@ const expressLayouts= require("express-ejs-layouts");
 const passport=require('passport');
 const passportLocal= require('./config/passport-local-strategy');
 const MongoStore=require('connect-mongo')(session);
+const sassMiddleware=require('node-sass-middleware');
 
+app.use(sassMiddleware({
+    src:'./assets/scss',
+    dest:'./assets/css',
+    debug: true, //make it false in prod mode
+    outputStyle: 'extended',
+    prefix:'/css'
+}));
 app.use(express.static('./assets'));
 app.use(expressLayouts);
 app.use(express.urlencoded({extended: true}));
@@ -26,10 +34,6 @@ app.set("views", "./views");
 
 
 //mongostore is used to store the session cookie in the db
-
-
-
-
 app.use(session({
     name: 'Sociospace',
     //todo change secrect before deploy i.e production
