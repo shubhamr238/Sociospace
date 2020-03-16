@@ -1,4 +1,7 @@
 const Post =require('../models/posts');
+const User=require('../models/user');
+
+
 module.exports.home=(req, res)=>{
 
     // Post.find({}, function(err, posts){
@@ -20,10 +23,16 @@ module.exports.home=(req, res)=>{
     })
     .exec(function(err, posts){
 
-        return res.render('home', {
-            title: "Sociospace | Home",
-            posts: posts
+        User.find({}, function(err, user){
+
+            return res.render('home', {
+                title: "Sociospace | Home",
+                posts: posts,
+                all_users:user
+            });        
+        
         });
+        
     });
     
 };

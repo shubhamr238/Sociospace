@@ -1,14 +1,31 @@
+const User=require('../models/user');
+
 module.exports.profile=(req, res)=>{
-    return res.render('user_profile', {
-        title: "Sociospace | User Profile"
+    
+    User.findById(req.params.id,function(err, user){
+
+        return res.render('user_profile', {
+            title: "Sociospace | User Profile",
+            profileUser: user
+        });
+
     });
+    
 };
 
-const User=require('../models/user');
+module.exports.update= function(req, res){
+    if(req.user.id==req.params.id){
+        User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+            return res.redirect('back');
+        })
+    }else{
+        return res.status(401).send('Unauthorized');
+    }
+}
 
 module.exports.signUp=(req, res)=>{
     if(req.isAuthenticated()){
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     }
     return res.render('user_sign_up', {
         title: "Sociospace | Sign Up"
@@ -17,7 +34,7 @@ module.exports.signUp=(req, res)=>{
 
 module.exports.signIn=(req, res)=>{
     if(req.isAuthenticated()){
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     }
     return res.render('user_sign_in', {
         title: "Sociospace | Sign In"
@@ -54,7 +71,7 @@ module.exports.create=(req, res)=>{
 //sign in and create a session for user
 module.exports.createSession=(req, res)=>{
     
-    return res.redirect('/users/profile');
+    return res.redirect('/');
 
 };
 
